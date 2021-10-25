@@ -7,7 +7,7 @@ V0 = float(input("Digite o valor da velocidade: "))
 A = float(input("Digite o valor da aceleração: "))
 T = float(input("Digite o valor do tempo: "))
 
-RESPOSTA = "Velocidade final: {V}\nDistância percorrida: {S}"
+RESPOSTA = "Velocidade final: {V:.2f}\nDistância percorrida: {S:.2f}"
 RESPOSTAS = {"V": V0+A*T, "S": V0*T + A*(T**2)/2}
 RESPOSTAS = {k: round(v, 2) for k,v in RESPOSTAS.items()}
 
