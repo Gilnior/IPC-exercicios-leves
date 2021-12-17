@@ -1,4 +1,7 @@
 class Tabuleiro:
+    """
+    Classe do tabuleiro contendo sua estrutura e lógicas de interação
+    """
     def __init__(self):
         self.mapa = {k: ' ' for k in "qweasdzxc"}
         self.game = "\n {q} | {w} | {e} \n---+---+---\n {a} | {s} | {d} \n---+---+---\n {z} | {x} | {c} \n"
@@ -25,6 +28,9 @@ class Tabuleiro:
 
 
 class Player:
+    """
+    Classe dos jogadores
+    """
     def __init__(self, tabuleiro: Tabuleiro):
         self.tabuleiro = tabuleiro
         self.marca = self.tabuleiro.get_marca()
@@ -34,6 +40,9 @@ class Player:
 
 
 class Game:
+    """
+    Classe com o jogo de fato, contendo sua lógica e regras
+    """
     def __init__(self):
         self.tabuleiro = Tabuleiro()
         self.jogador_1 = Player(self.tabuleiro)
@@ -42,7 +51,17 @@ class Game:
         self.winner = ""
 
     def start(self):
-        print(self.tabuleiro.game)
+        print(
+            f"\
+Instruções:\n\
+Para escolher sua jogada, basta digitar, no seu turno,\
+uma letra que corresponda à posição que você queira jogar \
+seguindo a seguinte referência:\n{self.tabuleiro.game}\n\
+obs: perceba que o jogo foi pensado para se jogar com uma mão \
+em um teclado convencional\n"
+            )
+        input("Entendido? [ENTER para começar]")
+
         while self.tabuleiro.len_posicoes_ocupadas != 9 and not self.winner:
             self.tabuleiro.show()
             print("Vez do jogador", self.turno.marca)
@@ -64,7 +83,6 @@ class Game:
         else:
             print("Empate...")
 
-    # TODO method to check if someone won the game
     def has_winner(self):
         """
         Basicamente checa se as condições de vitória foram alcançadas pelo jogador que acabou de jogar
@@ -82,6 +100,9 @@ class Game:
                 self.winner = self.turno.marca
 
     def check_victory(self, line):
+        """
+        Checa se essa linha/coluna/diagonal tem 3 marcas do jogador e retorna booleano
+        """
         return len([i[1] for i in [(p, v) for (p, v) in self.tabuleiro.mapa.items() if p in line] if i[1]==self.turno.marca])==3
 
 
