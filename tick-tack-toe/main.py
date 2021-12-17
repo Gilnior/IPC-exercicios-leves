@@ -1,10 +1,13 @@
 class Tabuleiro:
     def __init__(self):
         self.mapa = {k: ' ' for k in "qweasdzxc"}
-        self.game = " {q} | {w} | {e} \n---+---+---\n {a} | {s} | {d} \n---+---+---\n {z} | {x} | {c} "
+        self.game = "\n {q} | {w} | {e} \n---+---+---\n {a} | {s} | {d} \n---+---+---\n {z} | {x} | {c} \n"
         self.marcas = {'X', 'O'}
         self.posicoes_ocupadas = set()
         self.len_posicoes_ocupadas = 0
+        self.rows = [{'q','w', 'e'}, {'a', 's', 'd'}, {'z', 'x', 'c'}]
+        self.columns = [{'q', 'a', 'z'}, {'w', 's', 'x'}, {'e', 'd', 'c'}]
+        self.diagonals = [{'q', 's', 'c'}, {'z', 's', 'e'}]
 
     def marcar(self, coordenada, marca):
         self.mapa[coordenada]= marca
@@ -57,13 +60,30 @@ class Game:
         self.tabuleiro.show()
 
         if self.winner:
-            print(f"Parabéns jogador {self.winner}!")
+            print(f"Jogador {self.winner} vence!")
         else:
             print("Empate...")
 
     # TODO method to check if someone won the game
     def has_winner(self):
-        pass
+        """
+        Basicamente checa se as condições de vitória foram alcançadas pelo jogador que acabou de jogar
+        """
+        for row in self.tabuleiro.rows:
+            if self.check_victory(row):
+                self.winner = self.turno.marca
+
+        for column in self.tabuleiro.columns:
+            if self.check_victory(column):
+                self.winner = self.turno.marca
+
+        for diagonal in  self.tabuleiro.diagonals:
+            if self.check_victory(diagonal):
+                self.winner = self.turno.marca
+
+    def check_victory(self, line):
+        return len([i[1] for i in [(p, v) for (p, v) in self.tabuleiro.mapa.items() if p in line] if i[1]==self.turno.marca])==3
+
 
 if __name__=="__main__":
     Game().start()
