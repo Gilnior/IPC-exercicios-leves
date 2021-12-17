@@ -17,7 +17,10 @@ class Tabuleiro:
 
     def get_posicoes_jogadas(self):
         return len(self.posicoes_ocupadas)
-        
+    
+    def show(self):
+        print(self.game.format_map(self.mapa))
+
 
 class Player:
     def __init__(self, tabuleiro: Tabuleiro):
@@ -31,14 +34,15 @@ class Player:
 class Game:
     def __init__(self):
         self.tabuleiro = Tabuleiro()
-        self.jogador_x = Player(self.tabuleiro)
-        self.jogador_o = Player(self.tabuleiro)
-        self.turno = self.jogador_x
+        self.jogador_1 = Player(self.tabuleiro)
+        self.jogador_2 = Player(self.tabuleiro)
+        self.turno = self.jogador_1
         self.winner = ""
 
     def start(self):
+        print(self.tabuleiro.game)
         while self.tabuleiro.len_posicoes_ocupadas != 9 and not self.winner:
-            print(self.tabuleiro._game)
+            self.tabuleiro.show()
             print("Vez do jogador", self.turno.marca)
 
             valido = False
@@ -48,11 +52,19 @@ class Game:
                     and coordenada in self.tabuleiro.mapa.keys()
 
             self.turno.marcar(coordenada)
-            self.turno = self.jogador_x if self.turno.marca==self.jogador_o.marca else self.jogador_o
+            self.has_winner()
+            self.turno = self.jogador_1 if self.turno.marca==self.jogador_2.marca else self.jogador_2
+
+        self.tabuleiro.show()
+
+        if self.winner:
+            print(f"Parabéns jogador {self.winner}!")
+        else:
+            print("Empate...")
 
     # TODO method to check if someone won the game
     def has_winner(self):
         pass
 
 if __name__=="__main__":
-    Game.start()
+    Game().start()
