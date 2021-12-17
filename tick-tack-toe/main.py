@@ -1,9 +1,8 @@
 class Tabuleiro:
     def __init__(self):
-        self.mapa = {k: ' ' for k in "abcdefghi"}
-        self.game = " {a} | {b} | {c} \n---+---+---\n {d} | {e} | {f} \n---+---+---\n {g} | {h} | {i} "
+        self.mapa = {k: ' ' for k in "qweasdzxc"}
+        self.game = " {q} | {w} | {e} \n---+---+---\n {a} | {s} | {d} \n---+---+---\n {z} | {x} | {c} "
         self.marcas = {'X', 'O'}
-        self._game = self.game.format_map(self.mapa)
         self.posicoes_ocupadas = set()
         self.len_posicoes_ocupadas = 0
 
