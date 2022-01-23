@@ -1,5 +1,5 @@
 import unittest
-import main
+from tic_tac_toe import main
 
 class TestGame(unittest.TestCase):
 
